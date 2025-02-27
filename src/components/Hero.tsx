@@ -49,7 +49,7 @@ const Hero = () => {
           <div className="space-y-6 md:space-y-8">
             <p ref={subtitleRef} className="uppercase tracking-widest text-primary/70 text-sm opacity-0 translate-y-8 transition-all duration-700">СТУДИЯ ДИЗАЙНА ИНТЕРЬЕРА</p>
             
-            <h1 ref={titleRef} className="heading-xl opacity-0 translate-y-8 transition-all duration-700">Дизайн интерьеров, коммерческих и жилых пространств, который вдохновляет</h1>
+            <h1 ref={titleRef} className="heading-xl opacity-0 translate-y-8 transition-all duration-700">Дизайн интерьеров коммерческих и жилых пространств, который вдохновляет</h1>
             
             <p ref={descriptionRef} className="text-body-lg max-w-xl opacity-0 translate-y-8 transition-all duration-700">Созданием красивые и функциональные пространства, которые улучшают повседневную жизнь.</p>
             
