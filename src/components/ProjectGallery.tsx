@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { projects, Project } from '../assets/projects';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
@@ -41,7 +40,6 @@ const ProjectGallery = () => {
     };
   }, []);
 
-  // Auto-play functionality
   useEffect(() => {
     if (isAutoPlaying && selectedProject) {
       autoPlayTimerRef.current = setInterval(() => {
@@ -58,11 +56,9 @@ const ProjectGallery = () => {
     };
   }, [isAutoPlaying, selectedProject]);
 
-  // Reset image index when a new project is selected
   useEffect(() => {
     if (selectedProject) {
       setCurrentImageIndex(0);
-      // Start autoplay when a project is selected
       setIsAutoPlaying(true);
     } else {
       setIsAutoPlaying(false);
@@ -71,14 +67,12 @@ const ProjectGallery = () => {
 
   const handleOpenProject = (project: Project) => {
     setSelectedProject(project);
-    // Prevent scrolling when modal is open
     document.body.style.overflow = 'hidden';
   };
 
   const handleCloseProject = () => {
     setSelectedProject(null);
     setIsAutoPlaying(false);
-    // Re-enable scrolling
     document.body.style.overflow = 'auto';
   };
 
@@ -104,7 +98,6 @@ const ProjectGallery = () => {
     setIsAutoPlaying(prev => !prev);
   };
 
-  // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedProject) return;
@@ -134,25 +127,29 @@ const ProjectGallery = () => {
         className="section-container"
       >
         <div className="text-center mb-12">
-          <p className="text-sm uppercase tracking-widest text-primary/70 mb-3">Our Portfolio</p>
-          <h2 className="heading-lg mb-6">Featured Projects</h2>
+          <p className="text-sm uppercase tracking-widest text-primary/70 mb-3">Наше Портфолио</p>
+          <h2 className="heading-lg mb-6">Избранные Проекты</h2>
           <p className="text-body max-w-2xl mx-auto">
-            Explore our diverse collection of residential and commercial spaces,
-            each crafted with attention to detail and a deep understanding of our clients' needs.
+            Исследуйте нашу разнообразную коллекцию жилых и коммерческих пространств,
+            каждое из которых создано с вниманием к деталям и глубоким пониманием потребностей наших клиентов.
           </p>
           
           <div className="flex flex-wrap justify-center gap-2 mt-8">
-            {['all', 'residential', 'commercial'].map((category) => (
+            {[
+              ['all', 'Все'],
+              ['residential', 'Жилые'],
+              ['commercial', 'Коммерческие']
+            ].map(([value, label]) => (
               <button
-                key={category}
-                onClick={() => setFilter(category as any)}
+                key={value}
+                onClick={() => setFilter(value as any)}
                 className={`px-6 py-2 rounded-full text-sm transition-all ${
-                  filter === category 
+                  filter === value 
                     ? 'bg-primary text-primary-foreground shadow-md' 
                     : 'bg-accent hover:bg-accent/80 text-foreground'
                 }`}
               >
-                {category.charAt(0).toUpperCase() + category.slice(1)}
+                {label}
               </button>
             ))}
           </div>
@@ -209,11 +206,9 @@ const ProjectGallery = () => {
         </div>
       </div>
 
-      {/* Project Details Modal with Image Carousel */}
       {selectedProject && (
         <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 md:p-8">
           <div className="relative w-full max-w-6xl max-h-[90vh] overflow-hidden bg-secondary rounded-lg shadow-xl flex flex-col">
-            {/* Modal Header */}
             <div className="relative px-6 py-4 flex justify-between items-center border-b border-border">
               <h3 className="font-serif text-xl md:text-2xl font-medium truncate pr-10">
                 {selectedProject.title}
@@ -221,16 +216,14 @@ const ProjectGallery = () => {
               <button 
                 onClick={handleCloseProject}
                 className="absolute right-4 top-4 text-foreground/70 hover:text-foreground transition-colors"
-                aria-label="Close"
+                aria-label="Закрыть"
               >
                 <X size={24} />
               </button>
             </div>
             
-            {/* Carousel Container */}
             <div className="relative flex-grow overflow-hidden">
               <div className="relative w-full h-full flex items-center justify-center">
-                {/* Main Image */}
                 <div className="relative w-full h-[50vh] md:h-[60vh]">
                   {selectedProject.images.map((image, index) => (
                     <div 
@@ -248,7 +241,6 @@ const ProjectGallery = () => {
                   ))}
                 </div>
                 
-                {/* Navigation Arrows */}
                 <button
                   onClick={handlePrevImage}
                   className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-2 rounded-full text-white transition-colors z-10"
@@ -265,7 +257,6 @@ const ProjectGallery = () => {
                 </button>
               </div>
               
-              {/* Thumbnails row */}
               <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
                 <div className="flex justify-center items-center gap-2 overflow-x-auto py-2 px-2 scrollbar-hide">
                   {selectedProject.images.map((image, index) => (
@@ -292,7 +283,6 @@ const ProjectGallery = () => {
               </div>
             </div>
             
-            {/* Modal Footer */}
             <div className="p-4 md:p-6 border-t border-border flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <div className="flex flex-wrap gap-2 mb-2">
@@ -303,7 +293,7 @@ const ProjectGallery = () => {
                     {selectedProject.year}
                   </span>
                   <span className="text-xs px-2 py-1 bg-accent rounded-full">
-                    {selectedProject.category}
+                    {selectedProject.category === 'residential' ? 'Жилой' : 'Коммерческий'}
                   </span>
                 </div>
                 <p className="text-sm text-foreground/80">{selectedProject.description}</p>
@@ -321,7 +311,7 @@ const ProjectGallery = () => {
                       : 'bg-secondary hover:bg-accent text-foreground'
                   }`}
                 >
-                  {isAutoPlaying ? 'Pause Slideshow' : 'Play Slideshow'}
+                  {isAutoPlaying ? 'Остановить слайдшоу' : 'Запустить слайдшоу'}
                 </button>
               </div>
             </div>

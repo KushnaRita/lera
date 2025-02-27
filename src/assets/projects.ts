@@ -5,7 +5,7 @@ export interface Project {
   description: string;
   category: 'residential' | 'commercial';
   image: string;
-  images: string[]; // Array of additional images
+  images: string[];
   location: string;
   year: number;
   services: string[];
@@ -15,8 +15,8 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: '1',
-    title: 'Modern Minimalist Apartment',
-    description: 'A sleek, contemporary apartment design that maximizes space and light through careful material selection and thoughtful spatial planning.',
+    title: 'Современная Минималистичная Квартира',
+    description: 'Элегантный, современный дизайн квартиры, максимально использующий пространство и свет благодаря тщательному подбору материалов и продуманной планировке.',
     category: 'residential',
     image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&auto=format&fit=crop&q=80',
     images: [
@@ -24,15 +24,15 @@ export const projects: Project[] = [
       'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800&auto=format&fit=crop&q=80'
     ],
-    location: 'New York City, USA',
+    location: 'Нью-Йорк, США',
     year: 2023,
-    services: ['Interior Design', 'Space Planning', 'Furniture Selection'],
+    services: ['Дизайн Интерьера', 'Планировка Пространства', 'Подбор Мебели'],
     featured: true
   },
   {
     id: '2',
-    title: 'Serene Countryside Villa',
-    description: 'A luxurious countryside retreat that balances rustic charm with modern comforts, creating a peaceful sanctuary away from city life.',
+    title: 'Загородная Вилла',
+    description: 'Роскошное загородное убежище, сочетающее деревенское очарование с современным комфортом, создающее умиротворяющее пространство вдали от городской суеты.',
     category: 'residential',
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80',
     images: [
@@ -40,14 +40,14 @@ export const projects: Project[] = [
       'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop&q=80'
     ],
-    location: 'Tuscany, Italy',
+    location: 'Тоскана, Италия',
     year: 2022,
-    services: ['Architecture', 'Interior Design', 'Landscape Design'],
+    services: ['Архитектура', 'Дизайн Интерьера', 'Ландшафтный Дизайн']
   },
   {
     id: '3',
-    title: 'Boutique Retail Space',
-    description: 'A distinctive retail environment that elevates the shopping experience through careful attention to lighting, materials, and customer flow.',
+    title: 'Бутик-Пространство',
+    description: 'Уникальное торговое пространство, которое улучшает покупательский опыт благодаря тщательному вниманию к освещению, материалам и потоку клиентов.',
     category: 'commercial',
     image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&auto=format&fit=crop&q=80',
     images: [
@@ -55,15 +55,15 @@ export const projects: Project[] = [
       'https://images.unsplash.com/photo-1555529771-122e5d9f2341?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1604014236372-1def931e5f0a?w=800&auto=format&fit=crop&q=80'
     ],
-    location: 'Paris, France',
+    location: 'Париж, Франция',
     year: 2023,
-    services: ['Commercial Design', 'Lighting Design', 'Custom Fixtures'],
+    services: ['Коммерческий Дизайн', 'Световой Дизайн', 'Индивидуальная Мебель'],
     featured: true
   },
   {
     id: '4',
-    title: 'Contemporary Office Campus',
-    description: 'A forward-thinking workplace designed to foster collaboration, creativity, and employee wellbeing through innovative space planning.',
+    title: 'Современный Офисный Комплекс',
+    description: 'Прогрессивное рабочее пространство, созданное для развития сотрудничества, креативности и благополучия сотрудников через инновационное планирование.',
     category: 'commercial',
     image: 'https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&auto=format&fit=crop&q=80',
     images: [
@@ -71,15 +71,15 @@ export const projects: Project[] = [
       'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1542089363-bba089ffaa25?w=800&auto=format&fit=crop&q=80'
     ],
-    location: 'Singapore',
+    location: 'Сингапур',
     year: 2021,
-    services: ['Workplace Design', 'Space Planning', 'Furniture Specification'],
+    services: ['Дизайн Рабочих Мест', 'Планировка Пространства', 'Подбор Мебели'],
     featured: true
   },
   {
     id: '5',
-    title: 'Urban Loft Renovation',
-    description: 'A complete transformation of an industrial loft space into a sophisticated urban dwelling that respects the building\'s heritage.',
+    title: 'Реновация Городского Лофта',
+    description: 'Полное преобразование промышленного лофта в изысканное городское жилье, сохраняющее историческое наследие здания.',
     category: 'residential',
     image: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&auto=format&fit=crop&q=80',
     images: [
@@ -87,14 +87,14 @@ export const projects: Project[] = [
       'https://images.unsplash.com/photo-1600488999585-e4364713b90a?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&auto=format&fit=crop&q=80'
     ],
-    location: 'Berlin, Germany',
+    location: 'Берлин, Германия',
     year: 2022,
-    services: ['Renovation', 'Interior Design', 'Custom Furniture'],
+    services: ['Реновация', 'Дизайн Интерьера', 'Индивидуальная Мебель']
   },
   {
     id: '6',
-    title: 'Scandinavian-Inspired Home',
-    description: 'A bright and airy family home that embraces Scandinavian design principles with clean lines, functional spaces, and natural materials.',
+    title: 'Дом в Скандинавском Стиле',
+    description: 'Светлый и просторный семейный дом, воплощающий принципы скандинавского дизайна с чистыми линиями, функциональными пространствами и натуральными материалами.',
     category: 'residential',
     image: 'https://images.unsplash.com/photo-1567016432779-094069958ea5?w=800&auto=format&fit=crop&q=80',
     images: [
@@ -102,14 +102,14 @@ export const projects: Project[] = [
       'https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1532372576444-dda954194ad0?w=800&auto=format&fit=crop&q=80'
     ],
-    location: 'Copenhagen, Denmark',
+    location: 'Копенгаген, Дания',
     year: 2021,
-    services: ['Interior Design', 'Furniture Selection', 'Styling'],
+    services: ['Дизайн Интерьера', 'Подбор Мебели', 'Стилизация']
   },
   {
     id: '7',
-    title: 'Luxury Hotel Lobby',
-    description: 'An opulent hotel entrance that creates a memorable first impression through grand proportions, custom details, and luxurious materials.',
+    title: 'Лобби Роскошного Отеля',
+    description: 'Роскошный вход в отель, создающий незабываемое первое впечатление благодаря величественным пропорциям, индивидуальным деталям и люксовым материалам.',
     category: 'commercial',
     image: 'https://images.unsplash.com/photo-1606744888344-493238951221?w=800&auto=format&fit=crop&q=80',
     images: [
@@ -117,15 +117,15 @@ export const projects: Project[] = [
       'https://images.unsplash.com/photo-1596436889106-be35e843f974?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&auto=format&fit=crop&q=80'
     ],
-    location: 'Dubai, UAE',
+    location: 'Дубай, ОАЭ',
     year: 2023,
-    services: ['Hospitality Design', 'Custom Furniture', 'Art Consultation'],
+    services: ['Гостиничный Дизайн', 'Индивидуальная Мебель', 'Арт-Консультации'],
     featured: true
   },
   {
     id: '8',
-    title: 'Coastal Beach House',
-    description: 'A relaxed beachfront property that celebrates its stunning location with natural materials, a soothing palette, and indoor-outdoor living.',
+    title: 'Прибрежный Дом',
+    description: 'Расслабленное пляжное владение, которое подчеркивает свое потрясающее расположение с помощью натуральных материалов, успокаивающей палитры и интеграции внутреннего и внешнего пространства.',
     category: 'residential',
     image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800&auto=format&fit=crop&q=80',
     images: [
@@ -133,14 +133,14 @@ export const projects: Project[] = [
       'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1587920150204-f88cc6c9769c?w=800&auto=format&fit=crop&q=80'
     ],
-    location: 'Malibu, USA',
+    location: 'Малибу, США',
     year: 2022,
-    services: ['Interior Design', 'Landscape Integration', 'Custom Millwork'],
+    services: ['Дизайн Интерьера', 'Ландшафтная Интеграция', 'Столярные Работы']
   },
   {
     id: '9',
-    title: 'Modern Restaurant Design',
-    description: 'A distinctive dining establishment with a carefully curated atmosphere that enhances the culinary experience through thoughtful design.',
+    title: 'Дизайн Современного Ресторана',
+    description: 'Уникальное заведение общественного питания с тщательно подобранной атмосферой, которая усиливает кулинарные впечатления через продуманный дизайн.',
     category: 'commercial',
     image: 'https://images.unsplash.com/photo-1563136837-40a8335558cb?w=800&auto=format&fit=crop&q=80',
     images: [
@@ -148,47 +148,47 @@ export const projects: Project[] = [
       'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1564843344747-c6b474a4474c?w=800&auto=format&fit=crop&q=80'
     ],
-    location: 'Melbourne, Australia',
+    location: 'Мельбурн, Австралия',
     year: 2021,
-    services: ['Restaurant Design', 'Lighting Design', 'Custom Furniture'],
-  },
+    services: ['Дизайн Ресторанов', 'Световой Дизайн', 'Индивидуальная Мебель']
+  }
 ];
 
 export const studioServices = [
   {
     id: 'interior-design',
-    title: 'Interior Design',
-    description: 'Complete interior design solutions for residential and commercial spaces, from concept to completion.',
+    title: 'Дизайн Интерьера',
+    description: 'Комплексные решения по дизайну интерьера для жилых и коммерческих помещений, от концепции до реализации.',
     image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&auto=format&fit=crop&q=80',
   },
   {
     id: 'space-planning',
-    title: 'Space Planning',
-    description: 'Strategic space planning that optimizes functionality, flow, and spatial experience.',
+    title: 'Планировка Пространства',
+    description: 'Стратегическое планирование пространства, оптимизирующее функциональность, поток и пространственный опыт.',
     image: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop&q=80',
   },
   {
     id: 'furniture-design',
-    title: 'Furniture Design',
-    description: 'Custom furniture design and curation that perfectly complements the space and client needs.',
+    title: 'Дизайн Мебели',
+    description: 'Индивидуальный дизайн мебели и подбор, который идеально дополняет пространство и потребности клиента.',
     image: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=800&auto=format&fit=crop&q=80',
   },
   {
     id: 'commercial-design',
-    title: 'Commercial Design',
-    description: 'Specialized design for retail, hospitality, and workplace environments that enhance brand experience.',
+    title: 'Коммерческий Дизайн',
+    description: 'Специализированный дизайн для розничной торговли, гостиничного бизнеса и рабочих пространств, улучшающий восприятие бренда.',
     image: 'https://images.unsplash.com/photo-1604014236812-28d665e1878d?w=800&auto=format&fit=crop&q=80',
   },
   {
     id: 'renovation',
-    title: 'Renovation',
-    description: 'Thoughtful renovation and restoration services that honor architectural heritage while meeting modern needs.',
+    title: 'Реновация',
+    description: 'Продуманные услуги по реновации и реставрации, сохраняющие архитектурное наследие при удовлетворении современных потребностей.',
     image: 'https://images.unsplash.com/photo-1574739782594-db4ead022697?w=800&auto=format&fit=crop&q=80',
   },
   {
     id: 'consultation',
-    title: 'Design Consultation',
-    description: 'Expert guidance and consultation to help clients make informed design decisions for their spaces.',
+    title: 'Консультации по Дизайну',
+    description: 'Экспертное руководство и консультации, помогающие клиентам принимать информированные решения по дизайну их пространств.',
     image: 'https://images.unsplash.com/photo-1664574654589-8f6c9b94c02d?w=800&auto=format&fit=crop&q=80',
   },
 ];

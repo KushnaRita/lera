@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
@@ -38,19 +37,24 @@ const Navbar = () => {
               onClick={() => scrollToSection('hero')}
               className="font-serif text-2xl font-medium text-primary transition-opacity hover:opacity-80"
             >
-              Atelier
+              Ателье
             </button>
           </div>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
-            {['projects', 'about', 'services', 'contact'].map((item) => (
+            {[
+              ['projects', 'Проекты'],
+              ['about', 'О Нас'],
+              ['services', 'Услуги'],
+              ['contact', 'Контакты']
+            ].map(([id, label]) => (
               <button
-                key={item}
-                onClick={() => scrollToSection(item)}
+                key={id}
+                onClick={() => scrollToSection(id)}
                 className="text-foreground/80 hover:text-primary transition-colors text-sm tracking-wide uppercase"
               >
-                {item}
+                {label}
               </button>
             ))}
           </nav>
@@ -60,6 +64,7 @@ const Navbar = () => {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-foreground p-2 rounded-md hover:bg-accent/50 transition-colors"
+              aria-label={isMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -71,13 +76,18 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md shadow-md animate-fade-in">
           <div className="px-4 pt-2 pb-4 space-y-1">
-            {['projects', 'about', 'services', 'contact'].map((item) => (
+            {[
+              ['projects', 'Проекты'],
+              ['about', 'О Нас'],
+              ['services', 'Услуги'],
+              ['contact', 'Контакты']
+            ].map(([id, label]) => (
               <button
-                key={item}
-                onClick={() => scrollToSection(item)}
+                key={id}
+                onClick={() => scrollToSection(id)}
                 className="block w-full text-left px-3 py-4 text-base font-medium text-foreground/80 hover:text-primary border-b border-border last:border-0 transition-colors"
               >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
+                {label}
               </button>
             ))}
           </div>

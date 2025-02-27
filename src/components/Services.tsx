@@ -1,4 +1,3 @@
-
 import { useRef, useEffect, useState } from 'react';
 import { studioServices } from '../assets/projects';
 
@@ -33,11 +32,11 @@ const Services = () => {
         className="section-container"
       >
         <div className="text-center mb-16">
-          <p className="text-sm uppercase tracking-widest text-primary/70 mb-3">What We Offer</p>
-          <h2 className="heading-lg mb-6">Our Services</h2>
+          <p className="text-sm uppercase tracking-widest text-primary/70 mb-3">Что Мы Предлагаем</p>
+          <h2 className="heading-lg mb-6">Наши Услуги</h2>
           <p className="text-body max-w-2xl mx-auto">
-            We provide comprehensive design solutions tailored to each project's unique requirements,
-            from concept development to final styling and everything in between.
+            Мы предоставляем комплексные дизайнерские решения, адаптированные под уникальные требования каждого проекта,
+            от разработки концепции до финальной стилизации и всего между ними.
           </p>
         </div>
         
@@ -68,8 +67,8 @@ const Services = () => {
         
         <div className="mt-16 text-center">
           <p className="text-body max-w-2xl mx-auto mb-8">
-            Each project begins with a detailed consultation to understand your needs, vision, and budget.
-            We then develop a tailored approach to bring your project to life, guiding you through every step of the process.
+            Каждый проект начинается с детальной консультации для понимания ваших потребностей, видения и бюджета.
+            Затем мы разрабатываем индивидуальный подход для воплощения вашего проекта в жизнь, сопровождая вас на каждом этапе процесса.
           </p>
           <a 
             href="#contact" 
@@ -79,7 +78,7 @@ const Services = () => {
               document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
             }}
           >
-            Get in Touch
+            Связаться с Нами
           </a>
         </div>
       </div>

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 
 const Footer = () => {
@@ -13,26 +12,31 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="font-serif text-xl font-medium mb-4">Atelier</h3>
+            <h3 className="font-serif text-xl font-medium mb-4">Ателье</h3>
             <p className="text-primary/80 max-w-xs">
-              A boutique interior design studio creating thoughtful, functional spaces that inspire and elevate everyday experiences.
+              Бутик-студия дизайна интерьера, создающая продуманные, функциональные пространства, которые вдохновляют и улучшают повседневный опыт.
             </p>
           </div>
           
           <div>
-            <h4 className="font-medium text-lg mb-4">Quick Links</h4>
+            <h4 className="font-medium text-lg mb-4">Быстрые Ссылки</h4>
             <ul className="space-y-2">
-              {['projects', 'about', 'services', 'contact'].map((item) => (
-                <li key={item}>
+              {[
+                ['projects', 'Проекты'],
+                ['about', 'О Нас'],
+                ['services', 'Услуги'],
+                ['contact', 'Контакты']
+              ].map(([id, label]) => (
+                <li key={id}>
                   <a 
-                    href={`#${item}`}
+                    href={`#${id}`}
                     className="text-primary/80 hover:text-primary transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
-                      document.getElementById(item)?.scrollIntoView({ behavior: 'smooth' });
+                      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
                     }}
                   >
-                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                    {label}
                   </a>
                 </li>
               ))}
@@ -40,7 +44,7 @@ const Footer = () => {
           </div>
           
           <div>
-            <h4 className="font-medium text-lg mb-4">Connect</h4>
+            <h4 className="font-medium text-lg mb-4">Связаться</h4>
             <div className="flex space-x-4 mb-6">
               {['instagram', 'pinterest', 'houzz', 'linkedin'].map((platform) => (
                 <a 
@@ -58,23 +62,23 @@ const Footer = () => {
               ))}
             </div>
             <p className="text-primary/80 text-sm">
-              123 Design Street, Suite 400<br/>
-              New York, NY 10001<br/>
-              hello@atelierstudio.com
+              ул. Дизайнерская, 123, офис 400<br/>
+              Москва, Россия<br/>
+              hello@ateliestudio.ru
             </p>
           </div>
         </div>
         
         <div className="border-t border-accent/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-primary/70 text-sm mb-4 md:mb-0">
-            © {currentYear} Atelier Studio. All rights reserved.
+            © {currentYear} Ателье Студия. Все права защищены.
           </p>
           <div className="flex space-x-6">
             <a href="#" className="text-primary/70 hover:text-primary text-sm">
-              Privacy Policy
+              Политика Конфиденциальности
             </a>
             <a href="#" className="text-primary/70 hover:text-primary text-sm">
-              Terms of Service
+              Условия Использования
             </a>
           </div>
         </div>
