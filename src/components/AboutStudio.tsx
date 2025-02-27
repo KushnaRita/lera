@@ -36,13 +36,9 @@ const AboutStudio = () => {
             <p className="text-sm uppercase tracking-widest text-primary/70">СТУДИЯ</p>
             <h2 className="heading-lg">Наша философия дизайна</h2>
             
-            <p className="text-body">
-              Founded in 2015, Atelier is a boutique interior design studio specializing in creating thoughtful, functional spaces that reflect our clients' unique identities and enhance their daily experiences.
-            </p>
+            <p className="text-body">это бутик-студия дизайна интерьера, основанная в 2015 году, специализирующаяся на создании продуманных и функциональных пространств, которые отражают уникальную индивидуальность наших клиентов и улучшают их повседневную жизнь.</p>
             
-            <p className="text-body">
-              We believe great design should be both beautiful and practical, considering how spaces are lived in and experienced. Our process is deeply collaborative, working closely with clients to understand their vision and needs.
-            </p>
+            <p className="text-body">Мы уверены, что хороший дизайн должен быть не только красивым, но и удобным, учитывая, как люди используют и ощущают пространство. Мы всегда работаем в тесном сотрудничестве с клиентами, чтобы лучше понять их идеи и потребности.</p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
               <div className="bg-secondary/50 p-6 rounded-lg">
