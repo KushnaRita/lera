@@ -1,85 +1,77 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
-
 const ContactForm = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     service: '',
-    message: '',
+    message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
-
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsInView(true);
+        observer.disconnect();
+      }
+    }, {
+      threshold: 0.1
+    });
     if (containerRef.current) {
       observer.observe(containerRef.current);
     }
-
     return () => {
       observer.disconnect();
     };
   }, []);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const {
+      name,
+      value
+    } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
-      
+
       // Reset form
       setFormData({
         name: '',
         email: '',
         phone: '',
         service: '',
-        message: '',
+        message: ''
       });
-      
+
       // Show success toast
       toast({
         title: "Message Sent",
-        description: "Thank you for reaching out. We'll get back to you soon!",
+        description: "Thank you for reaching out. We'll get back to you soon!"
       });
     }, 1500);
   };
-
-  return (
-    <section id="contact" className="py-20 bg-background">
-      <div 
-        ref={containerRef}
-        className="section-container"
-      >
+  return <section id="contact" className="py-20 bg-background">
+      <div ref={containerRef} className="section-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           <div className={isInView ? 'animate-fade-in' : 'opacity-0'}>
-            <p className="text-sm uppercase tracking-widest text-primary/70 mb-3">Get In Touch</p>
-            <h2 className="heading-lg mb-6">Contact Us</h2>
+            <p className="text-sm uppercase tracking-widest text-primary/70 mb-3">КОНТАКТЫ</p>
+            <h2 className="heading-lg mb-6">Свяжитесь с нами</h2>
             
-            <p className="text-body mb-8">
-              Ready to transform your space? We'd love to hear about your project.
-              Fill out the form, and our team will get back to you to schedule a consultation.
-            </p>
+            <p className="text-body mb-8">Готовы преобразовать свое пространство? Нужен свежий взгляд? Вы по адресу. Будем рады покреативить для вас и вместе с вами.</p>
             
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
@@ -116,67 +108,36 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <h3 className="font-serif text-lg font-medium">Studio</h3>
-                  <p className="text-body-sm">123 Design Street, Suite 400<br/>New York, NY 10001</p>
+                  <p className="text-body-sm">123 Design Street, Suite 400<br />New York, NY 10001</p>
                 </div>
               </div>
             </div>
           </div>
           
-          <div className={`bg-secondary/30 rounded-lg p-8 ${isInView ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '200ms' }}>
+          <div className={`bg-secondary/30 rounded-lg p-8 ${isInView ? 'animate-fade-in' : 'opacity-0'}`} style={{
+          animationDelay: '200ms'
+        }}>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-foreground/80 mb-1">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="input-field"
-                  placeholder="Your name"
-                />
+                <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="input-field" placeholder="Your name" />
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-foreground/80 mb-1">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="input-field"
-                    placeholder="Your email"
-                  />
+                  <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="input-field" placeholder="Your email" />
                 </div>
                 
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-foreground/80 mb-1">Phone</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="input-field"
-                    placeholder="Your phone (optional)"
-                  />
+                  <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="input-field" placeholder="Your phone (optional)" />
                 </div>
               </div>
               
               <div>
                 <label htmlFor="service" className="block text-sm font-medium text-foreground/80 mb-1">Service Needed</label>
-                <select
-                  id="service"
-                  name="service"
-                  value={formData.service}
-                  onChange={handleChange}
-                  required
-                  className="input-field"
-                >
+                <select id="service" name="service" value={formData.service} onChange={handleChange} required className="input-field">
                   <option value="" disabled>Select a service</option>
                   <option value="interior-design">Interior Design</option>
                   <option value="space-planning">Space Planning</option>
@@ -189,30 +150,16 @@ const ContactForm = () => {
               
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-foreground/80 mb-1">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  className="input-field min-h-[120px]"
-                  placeholder="Tell us about your project"
-                ></textarea>
+                <textarea id="message" name="message" value={formData.message} onChange={handleChange} required className="input-field min-h-[120px]" placeholder="Tell us about your project"></textarea>
               </div>
               
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="button-primary w-full"
-              >
+              <button type="submit" disabled={isSubmitting} className="button-primary w-full">
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ContactForm;
