@@ -9,12 +9,12 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-primary text-primary-foreground py-12">
+    <footer className="bg-black text-primary py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="font-serif text-xl font-medium mb-4">Atelier</h3>
-            <p className="text-primary-foreground/80 max-w-xs">
+            <p className="text-primary/80 max-w-xs">
               A boutique interior design studio creating thoughtful, functional spaces that inspire and elevate everyday experiences.
             </p>
           </div>
@@ -26,7 +26,7 @@ const Footer = () => {
                 <li key={item}>
                   <a 
                     href={`#${item}`}
-                    className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+                    className="text-primary/80 hover:text-primary transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
                       document.getElementById(item)?.scrollIntoView({ behavior: 'smooth' });
@@ -46,7 +46,7 @@ const Footer = () => {
                 <a 
                   key={platform}
                   href="#"
-                  className="bg-primary-foreground/10 hover:bg-primary-foreground/20 p-2 rounded-full transition-colors"
+                  className="bg-accent p-2 rounded-full transition-colors hover:bg-accent/70"
                   aria-label={platform}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -57,7 +57,7 @@ const Footer = () => {
                 </a>
               ))}
             </div>
-            <p className="text-primary-foreground/80 text-sm">
+            <p className="text-primary/80 text-sm">
               123 Design Street, Suite 400<br/>
               New York, NY 10001<br/>
               hello@atelierstudio.com
@@ -65,15 +65,15 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-primary-foreground/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-primary-foreground/70 text-sm mb-4 md:mb-0">
+        <div className="border-t border-accent/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-primary/70 text-sm mb-4 md:mb-0">
             © {currentYear} Atelier Studio. All rights reserved.
           </p>
           <div className="flex space-x-6">
-            <a href="#" className="text-primary-foreground/70 hover:text-primary-foreground text-sm">
+            <a href="#" className="text-primary/70 hover:text-primary text-sm">
               Privacy Policy
             </a>
-            <a href="#" className="text-primary-foreground/70 hover:text-primary-foreground text-sm">
+            <a href="#" className="text-primary/70 hover:text-primary text-sm">
               Terms of Service
             </a>
           </div>

@@ -28,7 +28,7 @@ const Navbar = () => {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-background/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'
+        isScrolled ? 'bg-background/80 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,7 +59,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-foreground p-2 rounded-md hover:bg-background/80 transition-colors"
+              className="text-foreground p-2 rounded-md hover:bg-accent/50 transition-colors"
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -69,7 +69,7 @@ const Navbar = () => {
       
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-background/98 backdrop-blur-md shadow-md animate-fade-in">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md shadow-md animate-fade-in">
           <div className="px-4 pt-2 pb-4 space-y-1">
             {['projects', 'about', 'services', 'contact'].map((item) => (
               <button

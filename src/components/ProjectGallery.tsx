@@ -58,7 +58,7 @@ const ProjectGallery = () => {
                 className={`px-6 py-2 rounded-full text-sm transition-all ${
                   filter === category 
                     ? 'bg-primary text-primary-foreground shadow-md' 
-                    : 'bg-background hover:bg-accent text-foreground'
+                    : 'bg-accent hover:bg-accent/80 text-foreground'
                 }`}
               >
                 {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -71,7 +71,7 @@ const ProjectGallery = () => {
           {visibleProjects.map((project, index) => (
             <div 
               key={project.id}
-              className={`group bg-background rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 ${
+              className={`group bg-secondary rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 ${
                 isInView ? 'animate-slide-up' : 'opacity-0'
               }`}
               style={{ animationDelay: `${index * 100}ms` }}
@@ -91,7 +91,7 @@ const ProjectGallery = () => {
               <div className="p-5">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="font-serif text-lg font-medium">{project.title}</h3>
-                  <span className="text-xs px-2 py-1 bg-secondary rounded-full">
+                  <span className="text-xs px-2 py-1 bg-accent rounded-full">
                     {project.category}
                   </span>
                 </div>

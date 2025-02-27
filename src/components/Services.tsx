@@ -27,7 +27,7 @@ const Services = () => {
   }, []);
 
   return (
-    <section id="services" className="py-20 bg-accent/30">
+    <section id="services" className="py-20 bg-black">
       <div 
         ref={containerRef}
         className="section-container"
@@ -45,7 +45,7 @@ const Services = () => {
           {studioServices.map((service, index) => (
             <div 
               key={service.id}
-              className={`group bg-background rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 ${
+              className={`group bg-secondary rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 ${
                 isInView ? 'animate-slide-up' : 'opacity-0'
               }`}
               style={{ animationDelay: `${index * 100}ms` }}
