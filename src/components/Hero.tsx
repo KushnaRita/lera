@@ -51,7 +51,7 @@ const Hero = () => {
             
             <h1 ref={titleRef} className="heading-xl opacity-0 translate-y-8 transition-all duration-700">Дизайн интерьеров коммерческих и жилых пространств, который вдохновляет</h1>
             
-            <p ref={descriptionRef} className="text-body-lg max-w-xl opacity-0 translate-y-8 transition-all duration-700">Созданием красивые и функциональные пространства, которые улучшают повседневную жизнь.</p>
+            <p ref={descriptionRef} className="text-body-lg max-w-xl opacity-0 translate-y-8 transition-all duration-700">Созданием красивые и функциональные пространства, которые делают повседневную жизнь лучше.</p>
             
             <button ref={buttonRef} onClick={scrollToProjects} className="button-primary mt-4 opacity-0 translate-y-8 transition-all duration-700">Проекты</button>
           </div>
