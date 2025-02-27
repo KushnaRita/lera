@@ -58,7 +58,7 @@ export const projects: Project[] = [
   {
     id: '5',
     title: 'Urban Loft Renovation',
-    description: 'A complete transformation of an industrial loft space into a sophisticated urban dwelling that respects the building's heritage.',
+    description: 'A complete transformation of an industrial loft space into a sophisticated urban dwelling that respects the building\'s heritage.',
     category: 'residential',
     image: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&auto=format&fit=crop&q=80',
     location: 'Berlin, Germany',
