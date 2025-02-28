@@ -1,3 +1,4 @@
+
 import { useRef, useEffect, useState } from 'react';
 const AboutStudio = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -42,16 +43,16 @@ const AboutStudio = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
               <div className="bg-secondary/50 p-6 rounded-lg">
-                <h3 className="font-serif text-lg font-medium mb-2">Our Approach</h3>
+                <h3 className="font-serif text-lg font-medium mb-2">Наш подход</h3>
                 <p className="text-body-sm">
-                  We combine meticulous attention to detail with a holistic understanding of how spaces function to create environments that are as practical as they are beautiful.
+                  Мы сочетаем тщательное внимание к деталям с целостным пониманием функциональности пространств, создавая среду, которая так же практична, как и красива.
                 </p>
               </div>
               
               <div className="bg-secondary/50 p-6 rounded-lg">
-                <h3 className="font-serif text-lg font-medium mb-2">Our Values</h3>
+                <h3 className="font-serif text-lg font-medium mb-2">Наши ценности</h3>
                 <p className="text-body-sm">
-                  Integrity, craftsmanship, and sustainability are at the core of everything we do, guiding our design decisions and partnerships.
+                  Честность, мастерство и устойчивость лежат в основе всего, что мы делаем, направляя наши дизайнерские решения и партнерские отношения.
                 </p>
               </div>
             </div>
