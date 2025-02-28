@@ -1,9 +1,10 @@
+
 import { useState, useRef, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
+
 const ContactForm = () => {
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,9 +12,19 @@ const ContactForm = () => {
     service: '',
     message: ''
   });
+  
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    service: '',
+    message: ''
+  });
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
+  
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
@@ -23,25 +34,88 @@ const ContactForm = () => {
     }, {
       threshold: 0.1
     });
+    
     if (containerRef.current) {
       observer.observe(containerRef.current);
     }
+    
     return () => {
       observer.disconnect();
     };
   }, []);
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const {
-      name,
-      value
-    } = e.target;
+    const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+    
+    // Clear error when user types
+    if (errors[name as keyof typeof errors]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
   };
+  
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { ...errors };
+    
+    // Validate name (не пустое и содержит только буквы и пробелы)
+    if (!formData.name.trim()) {
+      newErrors.name = 'Пожалуйста, введите ваше имя';
+      isValid = false;
+    } else if (!/^[а-яА-Яa-zA-Z\s]+$/.test(formData.name.trim())) {
+      newErrors.name = 'Имя должно содержать только буквы';
+      isValid = false;
+    }
+    
+    // Validate email
+    if (!formData.email.trim()) {
+      newErrors.email = 'Пожалуйста, введите email';
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Пожалуйста, введите корректный email';
+      isValid = false;
+    }
+    
+    // Validate phone (если заполнено, то проверяем формат)
+    if (formData.phone.trim() && !/^(\+7|8)?[\s-]?\(?[0-9]{3}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}$/.test(formData.phone)) {
+      newErrors.phone = 'Пожалуйста, введите корректный телефон';
+      isValid = false;
+    }
+    
+    // Validate service
+    if (!formData.service) {
+      newErrors.service = 'Пожалуйста, выберите услугу';
+      isValid = false;
+    }
+    
+    // Validate message
+    if (!formData.message.trim()) {
+      newErrors.message = 'Пожалуйста, введите сообщение';
+      isValid = false;
+    }
+    
+    setErrors(newErrors);
+    return isValid;
+  };
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      toast({
+        title: "Ошибка",
+        description: "Пожалуйста, заполните все обязательные поля корректно.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     setIsSubmitting(true);
 
     // Simulate form submission
@@ -59,12 +133,14 @@ const ContactForm = () => {
 
       // Show success toast
       toast({
-        title: "Message Sent",
-        description: "Thank you for reaching out. We'll get back to you soon!"
+        title: "Сообщение отправлено",
+        description: "Спасибо за ваше обращение. Мы свяжемся с вами в ближайшее время!"
       });
     }, 1500);
   };
-  return <section id="contact" className="py-20 bg-background">
+  
+  return (
+    <section id="contact" className="py-20 bg-background">
       <div ref={containerRef} className="section-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           <div className={isInView ? 'animate-fade-in' : 'opacity-0'}>
@@ -94,8 +170,8 @@ const ContactForm = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-serif text-lg font-medium">Phone</h3>
-                  <p className="text-body-sm">+1 (555) 123-4567</p>
+                  <h3 className="font-serif text-lg font-medium">Телефон</h3>
+                  <p className="text-body-sm">+7 (495) 123-4567</p>
                 </div>
               </div>
               
@@ -107,59 +183,115 @@ const ContactForm = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-serif text-lg font-medium">Studio</h3>
-                  <p className="text-body-sm">123 Design Street, Suite 400<br />New York, NY 10001</p>
+                  <h3 className="font-serif text-lg font-medium">Студия</h3>
+                  <p className="text-body-sm">ул. Дизайнерская, 123, офис 400<br />Москва, Россия</p>
                 </div>
               </div>
             </div>
           </div>
           
           <div className={`bg-secondary/30 rounded-lg p-8 ${isInView ? 'animate-fade-in' : 'opacity-0'}`} style={{
-          animationDelay: '200ms'
-        }}>
+            animationDelay: '200ms'
+          }}>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-foreground/80 mb-1">Name</label>
-                <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="input-field" placeholder="Your name" />
+                <label htmlFor="name" className="block text-sm font-medium text-foreground/80 mb-1">Имя*</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  value={formData.name} 
+                  onChange={handleChange}
+                  required 
+                  className={`input-field ${errors.name ? 'ring-destructive focus:ring-destructive' : ''}`} 
+                  placeholder="Ваше имя" 
+                />
+                {errors.name && <p className="text-destructive text-sm mt-1">{errors.name}</p>}
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground/80 mb-1">Email</label>
-                  <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="input-field" placeholder="Your email" />
+                  <label htmlFor="email" className="block text-sm font-medium text-foreground/80 mb-1">Email*</label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    value={formData.email} 
+                    onChange={handleChange}
+                    required 
+                    className={`input-field ${errors.email ? 'ring-destructive focus:ring-destructive' : ''}`} 
+                    placeholder="Ваш email" 
+                  />
+                  {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
                 </div>
                 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-foreground/80 mb-1">Phone</label>
-                  <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="input-field" placeholder="Your phone (optional)" />
+                  <label htmlFor="phone" className="block text-sm font-medium text-foreground/80 mb-1">Телефон</label>
+                  <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    value={formData.phone} 
+                    onChange={handleChange}
+                    className={`input-field ${errors.phone ? 'ring-destructive focus:ring-destructive' : ''}`} 
+                    placeholder="+7 (___) ___-__-__" 
+                  />
+                  {errors.phone && <p className="text-destructive text-sm mt-1">{errors.phone}</p>}
                 </div>
               </div>
               
               <div>
-                <label htmlFor="service" className="block text-sm font-medium text-foreground/80 mb-1">Service Needed</label>
-                <select id="service" name="service" value={formData.service} onChange={handleChange} required className="input-field">
-                  <option value="" disabled>Select a service</option>
-                  <option value="interior-design">Interior Design</option>
-                  <option value="space-planning">Space Planning</option>
-                  <option value="furniture-design">Furniture Design</option>
-                  <option value="commercial-design">Commercial Design</option>
-                  <option value="renovation">Renovation</option>
-                  <option value="consultation">Design Consultation</option>
-                </select>
+                <label htmlFor="service" className="block text-sm font-medium text-foreground/80 mb-1">Услуга*</label>
+                <div className="relative">
+                  <select 
+                    id="service" 
+                    name="service" 
+                    value={formData.service} 
+                    onChange={handleChange}
+                    required 
+                    className={`input-field appearance-none pr-10 ${errors.service ? 'ring-destructive focus:ring-destructive' : ''}`}
+                    style={{ backgroundColor: 'hsl(var(--background))', borderRadius: 'var(--radius)' }}
+                  >
+                    <option value="" disabled>Выберите услугу</option>
+                    <option value="interior-design">Дизайн Интерьера</option>
+                    <option value="space-planning">Планировка Пространства</option>
+                    <option value="furniture-design">Дизайн Мебели</option>
+                    <option value="commercial-design">Коммерческий Дизайн</option>
+                    <option value="renovation">Реновация</option>
+                    <option value="consultation">Консультация по Дизайну</option>
+                  </select>
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </div>
+                {errors.service && <p className="text-destructive text-sm mt-1">{errors.service}</p>}
               </div>
               
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-foreground/80 mb-1">Message</label>
-                <textarea id="message" name="message" value={formData.message} onChange={handleChange} required className="input-field min-h-[120px]" placeholder="Tell us about your project"></textarea>
+                <label htmlFor="message" className="block text-sm font-medium text-foreground/80 mb-1">Сообщение*</label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  value={formData.message} 
+                  onChange={handleChange}
+                  required 
+                  className={`input-field min-h-[120px] ${errors.message ? 'ring-destructive focus:ring-destructive' : ''}`} 
+                  placeholder="Расскажите о вашем проекте"
+                ></textarea>
+                {errors.message && <p className="text-destructive text-sm mt-1">{errors.message}</p>}
               </div>
               
               <button type="submit" disabled={isSubmitting} className="button-primary w-full">
-                {isSubmitting ? 'Sending...' : 'Send Message'}
+                {isSubmitting ? 'Отправка...' : 'Отправить сообщение'}
               </button>
             </form>
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default ContactForm;
