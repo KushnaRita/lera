@@ -15,10 +15,7 @@ const ContactForm = () => {
   
   const [errors, setErrors] = useState({
     name: '',
-    email: '',
-    phone: '',
-    service: '',
-    message: ''
+    phone: ''
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,8 +48,8 @@ const ContactForm = () => {
       [name]: value
     }));
     
-    // Clear error when user types
-    if (errors[name as keyof typeof errors]) {
+    // Clear error when user types (только для имени и телефона)
+    if ((name === 'name' || name === 'phone') && errors[name as keyof typeof errors]) {
       setErrors(prev => ({
         ...prev,
         [name]: ''
@@ -73,30 +70,9 @@ const ContactForm = () => {
       isValid = false;
     }
     
-    // Validate email
-    if (!formData.email.trim()) {
-      newErrors.email = 'Пожалуйста, введите email';
-      isValid = false;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Пожалуйста, введите корректный email';
-      isValid = false;
-    }
-    
     // Validate phone (если заполнено, то проверяем формат)
     if (formData.phone.trim() && !/^(\+7|8)?[\s-]?\(?[0-9]{3}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}$/.test(formData.phone)) {
       newErrors.phone = 'Пожалуйста, введите корректный телефон';
-      isValid = false;
-    }
-    
-    // Validate service
-    if (!formData.service) {
-      newErrors.service = 'Пожалуйста, выберите услугу';
-      isValid = false;
-    }
-    
-    // Validate message
-    if (!formData.message.trim()) {
-      newErrors.message = 'Пожалуйста, введите сообщение';
       isValid = false;
     }
     
@@ -110,7 +86,17 @@ const ContactForm = () => {
     if (!validateForm()) {
       toast({
         title: "Ошибка",
-        description: "Пожалуйста, заполните все обязательные поля корректно.",
+        description: "Пожалуйста, проверьте правильность заполнения полей Имя и Телефон.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Проверка на заполнение обязательных полей
+    if (!formData.email || !formData.service || !formData.message) {
+      toast({
+        title: "Ошибка",
+        description: "Пожалуйста, заполните все обязательные поля.",
         variant: "destructive"
       });
       return;
@@ -219,10 +205,9 @@ const ContactForm = () => {
                     value={formData.email} 
                     onChange={handleChange}
                     required 
-                    className={`input-field ${errors.email ? 'ring-destructive focus:ring-destructive' : ''}`} 
+                    className="input-field" 
                     placeholder="Ваш email" 
                   />
-                  {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
                 </div>
                 
                 <div>
@@ -249,7 +234,7 @@ const ContactForm = () => {
                     value={formData.service} 
                     onChange={handleChange}
                     required 
-                    className={`input-field appearance-none pr-10 ${errors.service ? 'ring-destructive focus:ring-destructive' : ''}`}
+                    className="input-field appearance-none pr-10"
                     style={{ backgroundColor: 'hsl(var(--background))', borderRadius: 'var(--radius)' }}
                   >
                     <option value="" disabled>Выберите услугу</option>
@@ -266,7 +251,6 @@ const ContactForm = () => {
                     </svg>
                   </div>
                 </div>
-                {errors.service && <p className="text-destructive text-sm mt-1">{errors.service}</p>}
               </div>
               
               <div>
@@ -277,10 +261,9 @@ const ContactForm = () => {
                   value={formData.message} 
                   onChange={handleChange}
                   required 
-                  className={`input-field min-h-[120px] ${errors.message ? 'ring-destructive focus:ring-destructive' : ''}`} 
+                  className="input-field min-h-[120px]" 
                   placeholder="Расскажите о вашем проекте"
                 ></textarea>
-                {errors.message && <p className="text-destructive text-sm mt-1">{errors.message}</p>}
               </div>
               
               <button type="submit" disabled={isSubmitting} className="button-primary w-full">
