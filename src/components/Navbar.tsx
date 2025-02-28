@@ -1,13 +1,27 @@
+
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+      
+      // Определяем активную секцию при прокрутке
+      const sections = ['hero', 'projects', 'about', 'services', 'contact'];
+      const scrollPosition = window.scrollY + 100; // добавляем offset для лучшего определения
+      
+      for (const section of sections.reverse()) { // проверяем в обратном порядке - снизу вверх
+        const element = document.getElementById(section);
+        if (element && element.offsetTop <= scrollPosition) {
+          setActiveSection(section);
+          break;
+        }
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -19,8 +33,20 @@ const Navbar = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Закрываем мобильное меню
       setIsMenuOpen(false);
+      
+      // Определяем высоту навбара для правильного offset
+      const navbar = document.querySelector('header');
+      const navbarHeight = navbar ? navbar.getBoundingClientRect().height : 0;
+      const offset = navbarHeight + 20;
+      
+      // Используем scrollIntoView для плавной прокрутки
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -52,7 +78,11 @@ const Navbar = () => {
               <button
                 key={id}
                 onClick={() => scrollToSection(id)}
-                className="text-foreground/80 hover:text-primary transition-colors text-sm tracking-wide uppercase"
+                className={`text-sm tracking-wide uppercase transition-colors ${
+                  activeSection === id 
+                    ? 'text-primary font-medium' 
+                    : 'text-foreground/80 hover:text-primary'
+                }`}
               >
                 {label}
               </button>
@@ -85,7 +115,11 @@ const Navbar = () => {
               <button
                 key={id}
                 onClick={() => scrollToSection(id)}
-                className="block w-full text-left px-3 py-4 text-base font-medium text-foreground/80 hover:text-primary border-b border-border last:border-0 transition-colors"
+                className={`block w-full text-left px-3 py-4 text-base transition-colors border-b border-border last:border-0 ${
+                  activeSection === id 
+                    ? 'text-primary font-medium' 
+                    : 'text-foreground/80 hover:text-primary'
+                }`}
               >
                 {label}
               </button>

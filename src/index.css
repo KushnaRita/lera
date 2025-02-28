@@ -42,6 +42,11 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Это добавляет отступ при прокрутке к якорям */
+  }
+
   body {
     @apply bg-background text-foreground font-sans;
     -webkit-font-smoothing: antialiased;
@@ -50,6 +55,11 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif tracking-tight;
+  }
+  
+  section {
+    @apply transition-opacity duration-500 ease-in-out;
+    transition-delay: 0.1s; 
   }
 }
 
@@ -134,6 +144,19 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;  /* Chrome, Safari and Opera */
   }
+  
+  /* Дополнительные анимации для переходов между секциями */
+  .nav-link {
+    @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
+  }
+  
+  .section-transition {
+    @apply transition-all duration-500 ease-in-out opacity-0 translate-y-4;
+  }
+  
+  .section-transition.visible {
+    @apply opacity-100 translate-y-0;
+  }
 }
 
 @keyframes blink {
@@ -144,3 +167,4 @@
 .animate-blink {
   animation: blink 1s infinite;
 }
+
