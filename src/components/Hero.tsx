@@ -1,40 +1,67 @@
-import { useEffect, useRef } from 'react';
+
+import { useEffect, useRef, useState } from 'react';
+
 const Hero = () => {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  
+  const [displayedTitle, setDisplayedTitle] = useState('');
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
+  const fullTitle = 'Дизайн интерьеров коммерческих и жилых пространств, который вдохновляет';
+  
   useEffect(() => {
-    // Staggered animation effect
-    const elements = [{
-      ref: subtitleRef,
-      delay: 100
-    }, {
-      ref: titleRef,
-      delay: 300
-    }, {
-      ref: descriptionRef,
-      delay: 500
-    }, {
-      ref: buttonRef,
-      delay: 700
-    }, {
-      ref: imageRef,
-      delay: 900
-    }];
-    elements.forEach(({
-      ref,
-      delay
-    }) => {
-      if (ref.current) {
-        setTimeout(() => {
-          ref.current?.classList.add('opacity-100', 'translate-y-0');
-          ref.current?.classList.remove('opacity-0', 'translate-y-8');
-        }, delay);
+    // Typing animation for the title
+    let currentIndex = 0;
+    const typingSpeed = 50; // milliseconds per character
+    
+    const typingInterval = setInterval(() => {
+      if (currentIndex < fullTitle.length) {
+        setDisplayedTitle(fullTitle.substring(0, currentIndex + 1));
+        currentIndex++;
+      } else {
+        clearInterval(typingInterval);
+        setIsTypingComplete(true);
       }
-    });
+    }, typingSpeed);
+    
+    return () => clearInterval(typingInterval);
   }, []);
+  
+  useEffect(() => {
+    // Only animate other elements after typing is complete
+    if (isTypingComplete) {
+      // Staggered animation effect for other elements
+      const elements = [{
+        ref: subtitleRef,
+        delay: 100
+      }, {
+        ref: descriptionRef,
+        delay: 300
+      }, {
+        ref: buttonRef,
+        delay: 500
+      }, {
+        ref: imageRef,
+        delay: 700
+      }];
+      
+      elements.forEach(({
+        ref,
+        delay
+      }) => {
+        if (ref.current) {
+          setTimeout(() => {
+            ref.current?.classList.add('opacity-100', 'translate-y-0');
+            ref.current?.classList.remove('opacity-0', 'translate-y-8');
+          }, delay);
+        }
+      });
+    }
+  }, [isTypingComplete]);
+  
   const scrollToProjects = () => {
     const element = document.getElementById('projects');
     if (element) {
@@ -43,13 +70,17 @@ const Hero = () => {
       });
     }
   };
+  
   return <section id="hero" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
       <div className="section-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="space-y-6 md:space-y-8">
             <p ref={subtitleRef} className="uppercase tracking-widest text-primary/70 text-sm opacity-0 translate-y-8 transition-all duration-700">СТУДИЯ ДИЗАЙНА ИНТЕРЬЕРА</p>
             
-            <h1 ref={titleRef} className="heading-xl opacity-0 translate-y-8 transition-all duration-700">Дизайн интерьеров коммерческих и жилых пространств, который вдохновляет</h1>
+            <h1 className="heading-xl relative">
+              <span>{displayedTitle}</span>
+              <span className={`absolute right-0 bottom-0 inline-block w-0.5 h-8 bg-primary ${isTypingComplete ? 'animate-blink' : ''}`} style={{ marginBottom: '5px' }}></span>
+            </h1>
             
             <p ref={descriptionRef} className="text-body-lg max-w-xl opacity-0 translate-y-8 transition-all duration-700">Созданием красивые и функциональные пространства, которые делают повседневную жизнь лучше.</p>
             
