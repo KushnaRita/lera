@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 
@@ -48,7 +47,6 @@ const ContactForm = () => {
       [name]: value
     }));
     
-    // Clear error when user types (только для имени и телефона)
     if ((name === 'name' || name === 'phone') && errors[name as keyof typeof errors]) {
       setErrors(prev => ({
         ...prev,
@@ -61,7 +59,6 @@ const ContactForm = () => {
     let isValid = true;
     const newErrors = { ...errors };
     
-    // Validate name (не пустое и содержит только буквы и пробелы)
     if (!formData.name.trim()) {
       newErrors.name = 'Пожалуйста, введите ваше имя';
       isValid = false;
@@ -70,8 +67,10 @@ const ContactForm = () => {
       isValid = false;
     }
     
-    // Validate phone (если заполнено, то проверяем формат)
-    if (formData.phone.trim() && !/^(\+7|8)?[\s-]?\(?[0-9]{3}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}$/.test(formData.phone)) {
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Пожалуйста, введите ваш телефон';
+      isValid = false;
+    } else if (!/^(\+7|8)?[\s-]?\(?[0-9]{3}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}$/.test(formData.phone)) {
       newErrors.phone = 'Пожалуйста, введите корректный телефон';
       isValid = false;
     }
@@ -92,23 +91,11 @@ const ContactForm = () => {
       return;
     }
     
-    // Проверка на заполнение обязательных полей
-    if (!formData.email || !formData.service || !formData.message) {
-      toast({
-        title: "Ошибка",
-        description: "Пожалуйста, заполните все обязательные поля.",
-        variant: "destructive"
-      });
-      return;
-    }
-    
     setIsSubmitting(true);
 
-    // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
 
-      // Reset form
       setFormData({
         name: '',
         email: '',
@@ -117,7 +104,6 @@ const ContactForm = () => {
         message: ''
       });
 
-      // Show success toast
       toast({
         title: "Сообщение отправлено",
         description: "Спасибо за ваше обращение. Мы свяжемся с вами в ближайшее время!"
@@ -197,27 +183,27 @@ const ContactForm = () => {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground/80 mb-1">Email*</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-foreground/80 mb-1">Email</label>
                   <input 
                     type="email" 
                     id="email" 
                     name="email" 
                     value={formData.email} 
                     onChange={handleChange}
-                    required 
                     className="input-field" 
                     placeholder="Ваш email" 
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-foreground/80 mb-1">Телефон</label>
+                  <label htmlFor="phone" className="block text-sm font-medium text-foreground/80 mb-1">Телефон*</label>
                   <input 
                     type="tel" 
                     id="phone" 
                     name="phone" 
                     value={formData.phone} 
                     onChange={handleChange}
+                    required
                     className={`input-field ${errors.phone ? 'ring-destructive focus:ring-destructive' : ''}`} 
                     placeholder="+7 (___) ___-__-__" 
                   />
@@ -226,14 +212,13 @@ const ContactForm = () => {
               </div>
               
               <div>
-                <label htmlFor="service" className="block text-sm font-medium text-foreground/80 mb-1">Услуга*</label>
+                <label htmlFor="service" className="block text-sm font-medium text-foreground/80 mb-1">Услуга</label>
                 <div className="relative">
                   <select 
                     id="service" 
                     name="service" 
                     value={formData.service} 
                     onChange={handleChange}
-                    required 
                     className="input-field appearance-none pr-10"
                     style={{ backgroundColor: 'hsl(var(--background))', borderRadius: 'var(--radius)' }}
                   >
@@ -254,13 +239,12 @@ const ContactForm = () => {
               </div>
               
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-foreground/80 mb-1">Сообщение*</label>
+                <label htmlFor="message" className="block text-sm font-medium text-foreground/80 mb-1">Сообщение</label>
                 <textarea 
                   id="message" 
                   name="message" 
                   value={formData.message} 
                   onChange={handleChange}
-                  required 
                   className="input-field min-h-[120px]" 
                   placeholder="Расскажите о вашем проекте"
                 ></textarea>
