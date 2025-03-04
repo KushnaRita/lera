@@ -1,0 +1,46 @@
+name: Build and Deploy
+
+# Этот workflow будет запускаться при пуше в main (или любую другую ветку)
+on:
+  push:
+    branches:
+      - main  # или другая ветка, например "master"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Используется последняя версия Ubuntu
+
+    steps:
+    # 1. Проверяем код из репозитория
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2. Устанавливаем Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Укажи версию Node.js, которую используешь
+
+    # 3. Устанавливаем зависимости
+    - name: Install dependencies
+      run: npm install
+
+    # 4. Сборка проекта
+    - name: Build project
+      run: npm run build  # Или 'tsc', если ты не используешь build скрипт
+
+    # 5. Деплой на сервер через SSH
+    - name: Deploy to Server
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.HOST }}
+        USER: ${{ secrets.USER }}
+      run: |
+        # Установка SSH агента
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
+
+        # Копирование собранных файлов на сервер
+        rsync -avz ./dist/ $USER@$HOST:/path/to/your/web/directory
