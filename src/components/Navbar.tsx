@@ -1,25 +1,37 @@
 
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 
-const Navbar = () => {
+interface NavbarProps {
+  activeSection?: string;
+}
+
+const Navbar = ({ activeSection }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
+  const [localActiveSection, setLocalActiveSection] = useState('hero');
+
+  useEffect(() => {
+    if (activeSection) {
+      setLocalActiveSection(activeSection);
+    }
+  }, [activeSection]);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
       
-      // Определяем активную секцию при прокрутке
-      const sections = ['hero', 'projects', 'about', 'services', 'contact'];
-      const scrollPosition = window.scrollY + 100; // добавляем offset для лучшего определения
-      
-      for (const section of sections.reverse()) { // проверяем в обратном порядке - снизу вверх
-        const element = document.getElementById(section);
-        if (element && element.offsetTop <= scrollPosition) {
-          setActiveSection(section);
-          break;
+      // Этот код теперь резервный, если activeSection не передан через props
+      if (!activeSection) {
+        const sections = ['hero', 'projects', 'about', 'services', 'contact'];
+        const scrollPosition = window.scrollY + 100;
+        
+        for (const section of sections.reverse()) {
+          const element = document.getElementById(section);
+          if (element && element.offsetTop <= scrollPosition) {
+            setLocalActiveSection(section);
+            break;
+          }
         }
       }
     };
@@ -28,7 +40,7 @@ const Navbar = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [activeSection]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -36,23 +48,15 @@ const Navbar = () => {
       // Закрываем мобильное меню
       setIsMenuOpen(false);
       
-      // Определяем высоту навбара для правильного offset
-      const navbar = document.querySelector('header');
-      const navbarHeight = navbar ? navbar.getBoundingClientRect().height : 0;
-      const offset = navbarHeight + 20;
-      
-      // Используем scrollIntoView для плавной прокрутки
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth'
-      });
+      // Остальной код для прокрутки теперь обрабатывается в Index.tsx
+      // Мы просто добавляем хэш в URL, и обработчик в Index.tsx сделает всю работу
+      window.location.hash = id;
     }
   };
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled ? 'bg-background/80 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'
       }`}
     >
@@ -78,13 +82,16 @@ const Navbar = () => {
               <button
                 key={id}
                 onClick={() => scrollToSection(id)}
-                className={`text-sm tracking-wide uppercase transition-colors ${
-                  activeSection === id 
+                className={`text-sm tracking-wide uppercase transition-all duration-300 relative ${
+                  localActiveSection === id 
                     ? 'text-primary font-medium' 
                     : 'text-foreground/80 hover:text-primary'
                 }`}
               >
                 {label}
+                <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-primary transform transition-transform duration-300 ${
+                  localActiveSection === id ? 'scale-x-100' : 'scale-x-0'
+                }`}></span>
               </button>
             ))}
           </nav>
@@ -103,30 +110,32 @@ const Navbar = () => {
       </div>
       
       {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md shadow-md animate-fade-in">
-          <div className="px-4 pt-2 pb-4 space-y-1">
-            {[
-              ['projects', 'Проекты'],
-              ['about', 'О Нас'],
-              ['services', 'Услуги'],
-              ['contact', 'Контакты']
-            ].map(([id, label]) => (
-              <button
-                key={id}
-                onClick={() => scrollToSection(id)}
-                className={`block w-full text-left px-3 py-4 text-base transition-colors border-b border-border last:border-0 ${
-                  activeSection === id 
-                    ? 'text-primary font-medium' 
-                    : 'text-foreground/80 hover:text-primary'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+      <div 
+        className={`md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md shadow-md transition-all duration-500 overflow-hidden ${
+          isMenuOpen ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="px-4 pt-2 pb-4 space-y-1">
+          {[
+            ['projects', 'Проекты'],
+            ['about', 'О Нас'],
+            ['services', 'Услуги'],
+            ['contact', 'Контакты']
+          ].map(([id, label]) => (
+            <button
+              key={id}
+              onClick={() => scrollToSection(id)}
+              className={`block w-full text-left px-3 py-4 text-base transition-colors border-b border-border last:border-0 ${
+                localActiveSection === id 
+                  ? 'text-primary font-medium' 
+                  : 'text-foreground/80 hover:text-primary'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
-      )}
+      </div>
     </header>
   );
 };

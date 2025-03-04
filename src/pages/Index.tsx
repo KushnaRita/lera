@@ -10,6 +10,7 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   const [isScrolling, setIsScrolling] = useState(false);
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     // Улучшенная функция плавной прокрутки с дополнительными параметрами
@@ -30,9 +31,11 @@ const Index = () => {
         const timeElapsed = currentTime - startTime;
         const progress = Math.min(timeElapsed / duration, 1);
         
-        // Функция плавности (easeInOutQuad)
+        // Функция плавности (easeInOutCubic для более плавного эффекта)
         const ease = (t: number) => {
-          return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+          return t < 0.5 
+            ? 4 * t * t * t 
+            : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
         };
         
         window.scrollTo(0, startPosition + distance * ease(progress));
@@ -40,7 +43,7 @@ const Index = () => {
         if (timeElapsed < duration) {
           requestAnimationFrame(animation);
         } else {
-          setIsScrolling(false);
+          setTimeout(() => setIsScrolling(false), 100); // Небольшая задержка для предотвращения быстрых повторных кликов
         }
       };
       
@@ -70,11 +73,37 @@ const Index = () => {
       }
     };
 
+    // Определяем видимые секции для анимации появления при скроллинге
+    const handleScroll = () => {
+      const sections = document.querySelectorAll('section[id]');
+      const newVisibleSections = new Set<string>();
+      
+      sections.forEach((section) => {
+        const sectionId = section.getAttribute('id');
+        if (!sectionId) return;
+        
+        const rect = section.getBoundingClientRect();
+        const isVisible = 
+          rect.top <= window.innerHeight * 0.7 && 
+          rect.bottom >= window.innerHeight * 0.3;
+        
+        if (isVisible) {
+          newVisibleSections.add(sectionId);
+          section.classList.add('section-visible');
+        }
+      });
+      
+      setVisibleSections(newVisibleSections);
+    };
+
     // Добавляем слушатель событий для обработки кликов
     document.addEventListener('click', handleAnchorClick);
     
-    // Добавляем плавность прокрутки для всей страницы
-    document.documentElement.style.scrollBehavior = 'smooth';
+    // Добавляем слушатель для определения видимых секций
+    window.addEventListener('scroll', handleScroll);
+    
+    // Вызываем один раз при загрузке для инициализации видимых секций
+    handleScroll();
     
     // Обработчик для прокрутки к определенной секции при загрузке, если в URL есть хэш
     if (window.location.hash) {
@@ -89,13 +118,13 @@ const Index = () => {
     
     return () => {
       document.removeEventListener('click', handleAnchorClick);
-      document.documentElement.style.scrollBehavior = '';
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [isScrolling]);
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      <Navbar activeSection={[...visibleSections][0]} />
       <main className="flex-grow">
         <Hero />
         <ProjectGallery />
