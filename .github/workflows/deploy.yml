@@ -3,40 +3,40 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main  # Деплой будет происходить, когда вы пушите в ветку 'main'
+      - main  # Деплой будет происходить при пуше в ветку main
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Устанавливаем Linux-среду для выполнения задач
+    runs-on: ubuntu-latest  # Используем Ubuntu как среду выполнения
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2  # Этот шаг клонирует ваш репозиторий на сервер
+        uses: actions/checkout@v2  # Клонирует репозиторий
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2  # Устанавливаем Node.js (если ваш проект на нем)
+        uses: actions/setup-node@v2  # Устанавливаем Node.js
         with:
-          node-version: '14'  # Укажите нужную версию Node.js
+          node-version: '14'  # Указываем версию Node.js, подходящую для вашего проекта
 
       - name: Install dependencies
-        run: npm install  # Устанавливаем все зависимости проекта (если используется npm)
+        run: npm install  # Устанавливаем все зависимости проекта
 
-      - name: Build project
-        run: npm run build  # Выполняем сборку проекта (если у вас есть команда сборки)
+      - name: Build TypeScript project
+        run: npm run build  # Компилируем проект TypeScript с помощью команды `npm run build`
 
       - name: Copy files to server
-        uses: appleboy/ssh-action@v0.1.2  # Это шаг для копирования файлов на сервер через SSH
+        uses: appleboy/ssh-action@v0.1.2  # Деплой через SSH
         with:
-          host: ${{ secrets.HOST }}  # В переменную HOST вы должны добавить ваш сервер (IP-адрес или домен)
-          username: ${{ secrets.USERNAME }}  # Указывайте имя пользователя для подключения по SSH
-          key: ${{ secrets.SSH_PRIVATE_KEY }}  # Приватный ключ, который вы добавили в секреты GitHub
-          port: 22  # Порт по умолчанию для SSH
-          source: "dist/*"  # Указывайте папку или файлы, которые нужно передать на сервер
+          host: ${{ secrets.HOST }}  # Ваш сервер (IP-адрес или домен)
+          username: ${{ secrets.USERNAME }}  # Имя пользователя на сервере
+          key: ${{ secrets.SSH_PRIVATE_KEY }}  # Приватный ключ SSH
+          port: 22  # Порт для SSH
+          source: "dist/*"  # Указываем, что копируем папку dist (это папка с скомпилированным кодом)
           target: "/path/to/your/server/folder"  # Путь на сервере, куда нужно скопировать файлы
 
       - name: Restart server (optional)
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }} "pm2 restart all"  # Перезапускаем сервер, если используется PM2
+          ssh -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }} "pm2 restart all"  # Перезапускаем сервер, если используем PM2
         env:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
