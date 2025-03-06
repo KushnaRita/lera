@@ -1,46 +1,42 @@
-name: Build and Deploy
+name: Deploy to Server
 
-# Этот workflow будет запускаться при пуше в main (или любую другую ветку)
 on:
   push:
     branches:
-      - main  # или другая ветка, например "master"
+      - main  # Деплой будет происходить, когда вы пушите в ветку 'main'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest  # Используется последняя версия Ubuntu
+  deploy:
+    runs-on: ubuntu-latest  # Устанавливаем Linux-среду для выполнения задач
 
     steps:
-    # 1. Проверяем код из репозитория
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2  # Этот шаг клонирует ваш репозиторий на сервер
 
-    # 2. Устанавливаем Node.js
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'  # Укажи версию Node.js, которую используешь
+      - name: Set up Node.js
+        uses: actions/setup-node@v2  # Устанавливаем Node.js (если ваш проект на нем)
+        with:
+          node-version: '14'  # Укажите нужную версию Node.js
 
-    # 3. Устанавливаем зависимости
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install  # Устанавливаем все зависимости проекта (если используется npm)
 
-    # 4. Сборка проекта
-    - name: Build project
-      run: npm run build  # Или 'tsc', если ты не используешь build скрипт
+      - name: Build project
+        run: npm run build  # Выполняем сборку проекта (если у вас есть команда сборки)
 
-    # 5. Деплой на сервер через SSH
-    - name: Deploy to Server
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        HOST: ${{ secrets.HOST }}
-        USER: ${{ secrets.USER }}
-      run: |
-        # Установка SSH агента
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
+      - name: Copy files to server
+        uses: appleboy/ssh-action@v0.1.2  # Это шаг для копирования файлов на сервер через SSH
+        with:
+          host: ${{ secrets.HOST }}  # В переменную HOST вы должны добавить ваш сервер (IP-адрес или домен)
+          username: ${{ secrets.USERNAME }}  # Указывайте имя пользователя для подключения по SSH
+          key: ${{ secrets.SSH_PRIVATE_KEY }}  # Приватный ключ, который вы добавили в секреты GitHub
+          port: 22  # Порт по умолчанию для SSH
+          source: "dist/*"  # Указывайте папку или файлы, которые нужно передать на сервер
+          target: "/path/to/your/server/folder"  # Путь на сервере, куда нужно скопировать файлы
 
-        # Копирование собранных файлов на сервер
-        rsync -avz ./dist/ $USER@$HOST:/path/to/your/web/directory
+      - name: Restart server (optional)
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.HOST }} "pm2 restart all"  # Перезапускаем сервер, если используется PM2
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
