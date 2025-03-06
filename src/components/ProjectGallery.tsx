@@ -1,24 +1,32 @@
 import { useState, useRef, useEffect } from 'react';
-import { projects, Project } from '../assets/projects';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { projects as initialProjects, Project } from '../assets/projects';
+import { ChevronLeft, ChevronRight, X, Edit } from 'lucide-react';
+import ProjectEditModal from './ProjectEditModal';
+import { toast } from 'sonner';
 
 const ProjectGallery = () => {
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [filter, setFilter] = useState<'all' | 'residential' | 'commercial'>('all');
   const [visibleProjects, setVisibleProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const [projectToEdit, setProjectToEdit] = useState<Project | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
   const autoPlayTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const filteredProjects = filter === 'all' 
-      ? projects 
-      : projects.filter(project => project.category === filter);
-    
-    setVisibleProjects(filteredProjects);
-  }, [filter]);
+    const savedProjects = localStorage.getItem('editableProjects');
+    if (savedProjects) {
+      try {
+        setProjects(JSON.parse(savedProjects));
+      } catch (error) {
+        console.error('Failed to parse saved projects:', error);
+        setProjects(initialProjects);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -39,6 +47,14 @@ const ProjectGallery = () => {
       observer.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    const filteredProjects = filter === 'all' 
+      ? projects 
+      : projects.filter(project => project.category === filter);
+    
+    setVisibleProjects(filteredProjects);
+  }, [filter, projects]);
 
   useEffect(() => {
     if (isAutoPlaying && selectedProject) {
@@ -98,6 +114,32 @@ const ProjectGallery = () => {
     setIsAutoPlaying(prev => !prev);
   };
 
+  const handleEditProject = (e: React.MouseEvent, project: Project) => {
+    e.stopPropagation();
+    setProjectToEdit(project);
+  };
+
+  const handleSaveProject = (updatedProject: Project) => {
+    setProjects(prev => 
+      prev.map(p => p.id === updatedProject.id ? updatedProject : p)
+    );
+    setProjectToEdit(null);
+    
+    if (selectedProject && selectedProject.id === updatedProject.id) {
+      setSelectedProject(updatedProject);
+    }
+  };
+
+  const handleResetProjects = () => {
+    if (confirm('Вы уверены, что хотите сбросить все изменения проектов до исходного состояния?')) {
+      setProjects(initialProjects);
+      localStorage.removeItem('editableProjects');
+      toast("Проекты сброшены", {
+        description: "Все изменения были удалены",
+      });
+    }
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedProject) return;
@@ -134,7 +176,7 @@ const ProjectGallery = () => {
             каждое из которых создано с вниманием к деталям и глубоким пониманием потребностей наших клиентов.
           </p>
           
-          <div className="flex flex-wrap justify-center gap-2 mt-8">
+          <div className="flex flex-wrap justify-center gap-2 mt-8 mb-4">
             {[
               ['all', 'Все'],
               ['residential', 'Жилые'],
@@ -153,6 +195,13 @@ const ProjectGallery = () => {
               </button>
             ))}
           </div>
+          
+          <button 
+            onClick={handleResetProjects}
+            className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4"
+          >
+            Сбросить все изменения
+          </button>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -161,7 +210,7 @@ const ProjectGallery = () => {
               key={project.id}
               className={`group bg-secondary rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 ${
                 isInView ? 'animate-slide-up' : 'opacity-0'
-              } cursor-pointer`}
+              } cursor-pointer relative`}
               style={{ animationDelay: `${index * 100}ms` }}
               onClick={() => handleOpenProject(project)}
             >
@@ -176,12 +225,19 @@ const ProjectGallery = () => {
                   <p className="text-sm font-medium">{project.location}</p>
                   <p className="text-xs opacity-80">{project.year}</p>
                 </div>
+                <button
+                  onClick={(e) => handleEditProject(e, project)}
+                  className="absolute top-2 right-2 p-2 bg-black/40 hover:bg-black/60 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                  aria-label="Редактировать проект"
+                >
+                  <Edit size={16} />
+                </button>
               </div>
               <div className="p-5">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="font-serif text-lg font-medium">{project.title}</h3>
                   <span className="text-xs px-2 py-1 bg-accent rounded-full">
-                    {project.category}
+                    {project.category === 'residential' ? 'Жилой' : 'Коммерческий'}
                   </span>
                 </div>
                 <p className="text-body-sm line-clamp-3 mb-4">{project.description}</p>
@@ -196,7 +252,7 @@ const ProjectGallery = () => {
                   ))}
                   {project.services.length > 2 && (
                     <span className="text-xs px-2 py-1 bg-accent rounded-full">
-                      +{project.services.length - 2} more
+                      +{project.services.length - 2}
                     </span>
                   )}
                 </div>
@@ -213,13 +269,25 @@ const ProjectGallery = () => {
               <h3 className="font-serif text-xl md:text-2xl font-medium truncate pr-10">
                 {selectedProject.title}
               </h3>
-              <button 
-                onClick={handleCloseProject}
-                className="absolute right-4 top-4 text-foreground/70 hover:text-foreground transition-colors"
-                aria-label="Закрыть"
-              >
-                <X size={24} />
-              </button>
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={(e) => {
+                    handleCloseProject();
+                    handleEditProject(e, selectedProject);
+                  }}
+                  className="text-foreground/70 hover:text-foreground transition-colors"
+                  aria-label="Редактировать"
+                >
+                  <Edit size={20} />
+                </button>
+                <button 
+                  onClick={handleCloseProject}
+                  className="text-foreground/70 hover:text-foreground transition-colors"
+                  aria-label="Закрыть"
+                >
+                  <X size={24} />
+                </button>
+              </div>
             </div>
             
             <div className="relative flex-grow overflow-hidden">
@@ -317,6 +385,14 @@ const ProjectGallery = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {projectToEdit && (
+        <ProjectEditModal 
+          project={projectToEdit}
+          onClose={() => setProjectToEdit(null)}
+          onSave={handleSaveProject}
+        />
       )}
     </section>
   );
