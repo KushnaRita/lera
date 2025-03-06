@@ -164,10 +164,7 @@ const ProjectGallery = () => {
 
   return (
     <section id="projects" className="py-20 bg-secondary/30">
-      <div 
-        ref={containerRef}
-        className="section-container"
-      >
+      <div ref={containerRef} className="section-container">
         <div className="text-center mb-12">
           <p className="text-sm uppercase tracking-widest text-primary/70 mb-3">Наше Портфолио</p>
           <h2 className="heading-lg mb-6">Избранные Проекты</h2>
