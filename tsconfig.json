@@ -16,4 +16,19 @@
     "noUnusedLocals": false,
     "strictNullChecks": false
   }
+  {
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",  // Компилируемые файлы будут выходить в папку dist
+    "rootDir": "./src",  // Исходный код в папке src
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
 }
