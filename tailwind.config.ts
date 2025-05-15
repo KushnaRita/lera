@@ -75,6 +75,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         serif: ['Playfair Display', 'serif'],
+        orbitron: ['Orbitron', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {

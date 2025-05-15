@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -53,7 +54,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif tracking-tight;
+    @apply font-orbitron tracking-tight;
   }
   
   section {
@@ -73,23 +74,23 @@
 
 @layer components {
   .heading-xxl {
-    @apply font-serif text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground;
+    @apply font-orbitron text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground;
   }
   
   .heading-xl {
-    @apply font-serif text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-foreground;
+    @apply font-orbitron text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-foreground;
   }
   
   .heading-lg {
-    @apply font-serif text-3xl md:text-4xl font-medium tracking-tight text-foreground;
+    @apply font-orbitron text-3xl md:text-4xl font-medium tracking-tight text-foreground;
   }
   
   .heading-md {
-    @apply font-serif text-2xl md:text-3xl font-medium tracking-tight text-foreground;
+    @apply font-orbitron text-2xl md:text-3xl font-medium tracking-tight text-foreground;
   }
   
   .heading-sm {
-    @apply font-serif text-xl md:text-2xl font-medium tracking-tight text-foreground;
+    @apply font-orbitron text-xl md:text-2xl font-medium tracking-tight text-foreground;
   }
 
   .text-body-lg {

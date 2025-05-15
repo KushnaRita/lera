@@ -65,7 +65,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           <div className="flex-shrink-0">
             <button 
               onClick={() => scrollToSection('hero')}
-              className="font-serif text-2xl font-medium text-primary transition-opacity hover:opacity-80"
+              className="font-orbitron text-2xl font-medium text-primary transition-opacity hover:opacity-80"
             >
               Ателье
             </button>
@@ -82,7 +82,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
               <button
                 key={id}
                 onClick={() => scrollToSection(id)}
-                className={`text-sm tracking-wide uppercase transition-all duration-300 relative ${
+                className={`text-sm tracking-wide uppercase font-orbitron transition-all duration-300 relative ${
                   localActiveSection === id 
                     ? 'text-primary font-medium' 
                     : 'text-foreground/80 hover:text-primary'
@@ -125,7 +125,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             <button
               key={id}
               onClick={() => scrollToSection(id)}
-              className={`block w-full text-left px-3 py-4 text-base transition-colors border-b border-border last:border-0 ${
+              className={`block w-full text-left px-3 py-4 font-orbitron text-base transition-colors border-b border-border last:border-0 ${
                 localActiveSection === id 
                   ? 'text-primary font-medium' 
                   : 'text-foreground/80 hover:text-primary'
