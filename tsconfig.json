@@ -14,18 +14,14 @@
     "skipLibCheck": true,
     "allowJs": true,
     "noUnusedLocals": false,
-    "strictNullChecks": false
-  }
-  {
-  "compilerOptions": {
+    "strictNullChecks": false,
     "target": "ES6",
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",  // Компилируемые файлы будут выходить в папку dist
-    "rootDir": "./src",  // Исходный код в папке src
+    "outDir": "./dist",
+    "rootDir": "./src",
     "resolveJsonModule": true
   },
   "include": [
