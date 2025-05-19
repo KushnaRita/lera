@@ -132,7 +132,7 @@ const ProjectGallery = () => {
       <div ref={containerRef} className="section-container">
         <div className="text-center mb-12">
           <p className="text-sm uppercase tracking-widest text-primary/70 mb-3">ПОРТФОЛИО</p>
-          <h2 className="heading-lg mb-6">Избранные Проекты</h2>
+          <h2 className="heading-lg mb-6">Реализованные проекты</h2>
           <p className="text-body max-w-2xl mx-auto">
             Исследуйте нашу разнообразную коллекцию жилых и коммерческих пространств,
             каждое из которых создано с вниманием к деталям и глубоким пониманием потребностей наших клиентов.
