@@ -1,4 +1,3 @@
-
 import { useRef, useEffect, useState } from 'react';
 const AboutStudio = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -50,7 +49,7 @@ const AboutStudio = () => {
               </div>
               
               <div className="bg-secondary/50 p-6 rounded-lg">
-                <h3 className="font-serif text-lg font-medium mb-2">Наши ценности</h3>
+                <h3 className="font-serif text-lg font-medium mb-2">Функциональность</h3>
                 <p className="text-body-sm">
                   Честность, мастерство и устойчивость лежат в основе всего, что мы делаем, направляя наши дизайнерские решения и партнерские отношения.
                 </p>
