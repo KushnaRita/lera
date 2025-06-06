@@ -9,8 +9,8 @@ const Footer = () => {
   const [contactTitle, setContactTitle] = useState('Связаться');
   const [address, setAddress] = useState('ул. Дизайнерская, 123, офис 400');
   const [city, setCity] = useState('Москва, Россия');
-  const [email, setEmail] = useState('hello@ateliestudio.ru');
-  const [copyrightText, setCopyrightText] = useState('Ателье Студия. Все права защищены.');
+  const [email, setEmail] = useState('hello@pankratova-project.ru');
+  const [copyrightText, setCopyrightText] = useState('Pankratova_project');
   const [privacyText, setPrivacyText] = useState('Политика Конфиденциальности');
   const [termsText, setTermsText] = useState('Условия Использования');
 
@@ -22,7 +22,6 @@ const Footer = () => {
     { icon: Instagram, name: 'instagram' },
     { icon: MapPin, name: 'pinterest' },
     { icon: Mail, name: 'houzz' },
-    { icon: Linkedin, name: 'linkedin' }
   ];
 
   return (
