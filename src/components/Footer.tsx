@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="font-serif text-xl mb-4 font-medium">Pankratova_project</h3>
+            <h3 className="font-orbitron text-xl font-medium text-primary transition-opacity hover:opacity-80">Pankratova_project</h3>
             <p className="text-primary/80 max-w-xs">
               Бутик-студия дизайна интерьера, создающая продуманные, функциональные пространства, которые вдохновляют и улучшают повседневный опыт.
             </p>
