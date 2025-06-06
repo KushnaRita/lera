@@ -10,12 +10,11 @@ const Footer = () => {
           <div>
             <h3 className="font-orbitron text-xl font-medium text-primary transition-opacity hover:opacity-80">Pankratova_project</h3>
             <p className="text-primary/80 max-w-xs">
-              Бутик-студия дизайна интерьера, создающая продуманные, функциональные пространства, которые вдохновляют и улучшают повседневный опыт.
-            </p>
+Бутик-студия дизайна интерьера, создающая продуманные, функциональные пространства, которые вдохновляют и улучшают повседневный опыт.</p>
           </div>
           
           <div>
-            <h4 className="font-medium text-lg mb-4">Быстрые Ссылки</h4>
+            
             <ul className="space-y-2">
               {[['projects', 'Проекты'], ['about', 'О Нас'], ['services', 'Услуги'], ['contact', 'Контакты']].map(([id, label]) => <li key={id}>
                   <a href={`#${id}`} className="text-primary/80 hover:text-primary transition-colors" onClick={e => {
