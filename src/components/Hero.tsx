@@ -1,22 +1,18 @@
-
 import { useEffect, useRef, useState } from 'react';
-
 const Hero = () => {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  
   const [displayedTitle, setDisplayedTitle] = useState('');
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const fullTitle = 'Дизайн интерьеров коммерческих и жилых пространств, который вдохновляет';
-  
   useEffect(() => {
     // Typing animation for the title
     let currentIndex = 0;
     const typingSpeed = 50; // milliseconds per character
-    
+
     const typingInterval = setInterval(() => {
       if (currentIndex < fullTitle.length) {
         setDisplayedTitle(fullTitle.substring(0, currentIndex + 1));
@@ -26,10 +22,8 @@ const Hero = () => {
         setIsTypingComplete(true);
       }
     }, typingSpeed);
-    
     return () => clearInterval(typingInterval);
   }, []);
-  
   useEffect(() => {
     // Only animate other elements after typing is complete
     if (isTypingComplete) {
@@ -47,7 +41,6 @@ const Hero = () => {
         ref: imageRef,
         delay: 700
       }];
-      
       elements.forEach(({
         ref,
         delay
@@ -61,7 +54,6 @@ const Hero = () => {
       });
     }
   }, [isTypingComplete]);
-  
   const scrollToProjects = () => {
     const element = document.getElementById('projects');
     if (element) {
@@ -70,7 +62,6 @@ const Hero = () => {
       });
     }
   };
-  
   return <section id="hero" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
       <div className="section-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -79,10 +70,12 @@ const Hero = () => {
             
             <h1 className="heading-xl relative">
               <span>{displayedTitle}</span>
-              <span className={`absolute right-0 bottom-0 inline-block w-0.5 h-8 bg-primary ${isTypingComplete ? 'animate-blink' : ''}`} style={{ marginBottom: '5px' }}></span>
+              <span className={`absolute right-0 bottom-0 inline-block w-0.5 h-8 bg-primary ${isTypingComplete ? 'animate-blink' : ''}`} style={{
+              marginBottom: '5px'
+            }}></span>
             </h1>
             
-            <p ref={descriptionRef} className="text-body-lg max-w-xl opacity-0 translate-y-8 transition-all duration-700">Созданием красивые и функциональные пространства, которые делают повседневную жизнь лучше.</p>
+            <p ref={descriptionRef} className="text-body-lg max-w-xl opacity-0 translate-y-8 transition-all duration-700">Созданием продуманные до мелочей пространства, в которых хочется жить и работать. </p>
             
             <button ref={buttonRef} onClick={scrollToProjects} className="button-primary mt-4 opacity-0 translate-y-8 transition-all duration-700">Проекты</button>
           </div>
