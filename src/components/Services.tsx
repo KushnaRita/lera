@@ -1,9 +1,15 @@
+
 import { useRef, useEffect, useState } from 'react';
 import { studioServices } from '../assets/projects';
 
 const Services = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
+  const [sectionTitle, setSectionTitle] = useState('Наши Услуги');
+  const [sectionSubtitle, setSectionSubtitle] = useState('Что Мы Предлагаем');
+  const [sectionDescription, setSectionDescription] = useState('Мы предоставляем комплексные дизайнерские решения, адаптированные под уникальные требования каждого проекта, от разработки концепции до финальной стилизации и всего между ними.');
+  const [bottomDescription, setBottomDescription] = useState('Каждый проект начинается с детальной консультации для понимания ваших потребностей, видения и бюджета. Затем мы разрабатываем индивидуальный подход для воплощения вашего проекта в жизнь, сопровождая вас на каждом этапе процесса.');
+  const [buttonText, setButtonText] = useState('Связаться с Нами');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -32,11 +38,29 @@ const Services = () => {
         className="section-container"
       >
         <div className="text-center mb-16">
-          <p className="text-sm uppercase tracking-widest text-primary/70 mb-3">Что Мы Предлагаем</p>
-          <h2 className="heading-lg mb-6">Наши Услуги</h2>
-          <p className="text-body max-w-2xl mx-auto">
-            Мы предоставляем комплексные дизайнерские решения, адаптированные под уникальные требования каждого проекта,
-            от разработки концепции до финальной стилизации и всего между ними.
+          <p 
+            className="text-sm uppercase tracking-widest text-primary/70 mb-3 cursor-pointer"
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) => setSectionSubtitle(e.target.textContent || '')}
+          >
+            {sectionSubtitle}
+          </p>
+          <h2 
+            className="heading-lg mb-6 cursor-pointer"
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) => setSectionTitle(e.target.textContent || '')}
+          >
+            {sectionTitle}
+          </h2>
+          <p 
+            className="text-body max-w-2xl mx-auto cursor-pointer"
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) => setSectionDescription(e.target.textContent || '')}
+          >
+            {sectionDescription}
           </p>
         </div>
         
@@ -66,19 +90,26 @@ const Services = () => {
         </div>
         
         <div className="mt-16 text-center">
-          <p className="text-body max-w-2xl mx-auto mb-8">
-            Каждый проект начинается с детальной консультации для понимания ваших потребностей, видения и бюджета.
-            Затем мы разрабатываем индивидуальный подход для воплощения вашего проекта в жизнь, сопровождая вас на каждом этапе процесса.
+          <p 
+            className="text-body max-w-2xl mx-auto mb-8 cursor-pointer"
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) => setBottomDescription(e.target.textContent || '')}
+          >
+            {bottomDescription}
           </p>
           <a 
             href="#contact" 
-            className="button-primary"
+            className="button-primary cursor-pointer"
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) => setButtonText(e.target.textContent || '')}
             onClick={(e) => {
               e.preventDefault();
               document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
             }}
           >
-            Связаться с Нами
+            {buttonText}
           </a>
         </div>
       </div>
