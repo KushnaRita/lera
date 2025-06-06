@@ -10,7 +10,7 @@ const Footer = () => {
           <div>
             <h3 className="font-orbitron text-xl font-medium text-primary transition-opacity hover:opacity-80">Pankratova_project</h3>
             <p className="text-primary/80 max-w-xs">
-Бутик-студия дизайна интерьера, создающая продуманные, функциональные пространства, которые вдохновляют и улучшают повседневный опыт.</p>
+Бутик-студия дизайна интерьера, создающая продуманные, функциональные пространства, которые вдохновляют.</p>
           </div>
           
           <div>
