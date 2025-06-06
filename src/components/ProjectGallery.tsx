@@ -133,10 +133,7 @@ const ProjectGallery = () => {
         <div className="text-center mb-12">
           <p className="text-sm uppercase tracking-widest text-primary/70 mb-3">ПОРТФОЛИО</p>
           <h2 className="heading-lg mb-6">Реализованные проекты</h2>
-          <p className="text-body max-w-2xl mx-auto">
-            Исследуйте нашу разнообразную коллекцию жилых и коммерческих пространств,
-            каждое из которых создано с вниманием к деталям и глубоким пониманием потребностей наших клиентов.
-          </p>
+          <p className="text-body max-w-2xl mx-auto">Более 6000 кв метров спроектированных пространств. От уютных SPA-центров до масштабных спортивных арен. </p>
           
           <div className="flex flex-wrap justify-center gap-2 mt-8 mb-4">
             {[['all', 'Все'], ['residential', 'Жилые'], ['commercial', 'Коммерческие']].map(([value, label]) => <button key={value} onClick={() => setFilter(value as any)} className={`px-6 py-2 rounded-full text-sm transition-all ${filter === value ? 'bg-primary text-primary-foreground shadow-md' : 'bg-accent hover:bg-accent/80 text-foreground'}`}>
