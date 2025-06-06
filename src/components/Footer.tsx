@@ -32,13 +32,7 @@ const Footer = () => {
           <div>
             <h4 className="font-medium text-lg mb-4">Связаться</h4>
             <div className="flex space-x-4 mb-6">
-              {['instagram', 'pinterest', 'houzz', 'linkedin'].map(platform => <a key={platform} href="#" className="bg-accent p-2 rounded-full transition-colors hover:bg-accent/70" aria-label={platform}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
-                  </svg>
-                </a>)}
+              {['instagram', 'pinterest', 'houzz', 'linkedin'].map(platform => {})}
             </div>
             <p className="text-primary/80 text-sm">
               ул. Дизайнерская, 123, офис 400<br />
