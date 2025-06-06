@@ -43,8 +43,8 @@ const AboutStudio = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
               <div className="bg-secondary/50 p-6 rounded-lg">
-                <h3 className="font-serif text-lg font-medium mb-2">Наш подход</h3>
-                <p className="text-body-sm">Сочетаем тщательное внимание к деталям с целостным пониманием функциональности пространств</p>
+                <h3 className="font-serif text-lg font-medium mb-2">Эстетика</h3>
+                <p className="text-body-sm">Сочетаем тщательное внимание к деталям, материалам, параметрам света и восприятия пространства.</p>
               </div>
               
               <div className="bg-secondary/50 p-6 rounded-lg">
